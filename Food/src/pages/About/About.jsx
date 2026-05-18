@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./About.css";
 
 const team = [
@@ -17,6 +18,8 @@ const values = [
 ];
 
 export default function About() {
+  const navigate = useNavigate();
+
   return (
     <section className="about" id="about">
       <div className="about__container">
@@ -74,16 +77,13 @@ export default function About() {
             <h3>Готовы работать с вами</h3>
             <p>Оставьте заявку и мы свяжемся с вами в течение часа</p>
           </div>
-          <a
-            href="#contacts"
+          <button
+            type="button"
             className="about__banner-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#contacts")?.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={() => navigate("/contacts")}
           >
             Написать нам →
-          </a>
+          </button>
         </div>
 
       </div>

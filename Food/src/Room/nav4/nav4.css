@@ -1,0 +1,16 @@
+.nav4-container {
+  padding: 20px;
+  background: #1e1e2f;
+  color: #fff;
+}
+
+.nav4-report {
+  margin-top: 15px;
+  background: #2a2a3d;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.nav4-report p {
+  margin: 5px 0;
+}

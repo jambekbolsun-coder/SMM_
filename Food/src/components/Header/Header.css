@@ -98,6 +98,7 @@
 }
 
 .header__cabinet-btn {
+    cursor: pointer;
   text-decoration: none;
   background: #1a56db;
   color: #fff;
@@ -360,4 +361,115 @@
 .header__logo-text {
   display: flex;
   align-items: center;
+}
+.cabinet-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.cabinet-modal__box {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modalShow 0.25s ease;
+}
+
+.cabinet-modal__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+  text-align: center;
+}
+
+.cabinet-modal__input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #dbe3f0;
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.cabinet-modal__input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.cabinet-modal__error {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.cabinet-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cabinet-modal__cancel,
+.cabinet-modal__login {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cabinet-modal__cancel {
+  background: #eef2ff;
+  color: #1e3a8a;
+}
+
+.cabinet-modal__cancel:hover {
+  background: #dbeafe;
+}
+
+.cabinet-modal__login {
+  background: #2563eb;
+  color: white;
+}
+  .header__reviews {
+ text-decoration: none;
+  background: #1a56db;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 10px;
+    transition: background 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+
+  }
+
+.cabinet-modal__login:hover {
+  background: #1d4ed8;
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

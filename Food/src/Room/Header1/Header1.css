@@ -1,0 +1,31 @@
+.header {
+  background: #1e1e2f;
+  color: #fff;
+  padding: 20px;
+  border-bottom: 2px solid #2a2a3d;
+}
+
+.header h1 {
+  margin: 0 0 15px;
+  font-size: 24px;
+  color: #4cafef;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.summary p {
+  margin: 0;
+  padding: 10px 15px;
+  background: #2a2a3d;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.summary p:hover {
+  background: #34344a;
+}

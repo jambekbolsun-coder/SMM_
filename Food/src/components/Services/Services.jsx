@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Services.css";
 
 const monthly = [
@@ -112,11 +113,7 @@ function PriceCard({ card }) {
 
       <button
         className="price-card__btn"
-        onClick={() =>
-          document
-            .querySelector("#contacts")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
+        onClick={() => navigate("/contacts")}
       >
         Начать →
       </button>
@@ -126,6 +123,7 @@ function PriceCard({ card }) {
 
 export default function Services() {
   const [tab, setTab] = useState("monthly");
+  const navigate = useNavigate();
 
   return (
     <section className="services" id="services">

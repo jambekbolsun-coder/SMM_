@@ -1,11 +1,14 @@
-import { useState } from "react";
+﻿import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
-import Services from "./components/Services/Services";
-import Reviews from "./components/Reviews/Reviews";
-import LeaveReview from "./components/LeaveReview/LeaveReview";
-import Contacts from "./components/Contacts/Contacts";
+import ServicesPage from "./pages/Services/ServicesPage";
+import ReviewsPage from "./pages/Reviews/ReviewsPage";
+import ContactsPage from "./pages/Contacts/ContactsPage";
+import Cabinet from "./pages/Cabinet/Cabinet";
+import ModalPage from "./pages/modal/ModalPage";
+import NotFound from "./pages/NotFound/NotFound";
 import ChatBot from "./pages/Chat/ChatBot";
 import Footer from "./components/Footer/Footer";
 
@@ -21,12 +24,16 @@ export default function App() {
     <div className="app">
       <Header />
       <main>
-        <Home />
-        <About />
-        <Services />
-        <Reviews />
-        <LeaveReview />
-        <Contacts />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/modal" element={<ModalPage />} />
+          <Route path="/cabinet" element={<Cabinet />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <Footer />
       <ChatBot />

@@ -1,0 +1,26 @@
+.nav3-container {
+  padding: 20px;
+  background: #1e1e2f;
+  color: #fff;
+}
+
+.nav3-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav3-form input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.nav3-form button {
+  padding: 10px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

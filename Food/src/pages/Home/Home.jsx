@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 export default function Home() {
   const counters = useRef([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const targets = [120, 98, 4, 50];
+    const targets = [70, 98, 1, 20];
     const labels = ["Проектов", "% довольных\nклиентов", "Года опыта", "Специалистов"];
 
     counters.current.forEach((el, i) => {
@@ -26,9 +28,8 @@ export default function Home() {
     });
   }, []);
 
-  const handleScroll = (href) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const handleNavigate = (path) => {
+    navigate(path);
   };
 
   return (
@@ -60,7 +61,7 @@ export default function Home() {
           <div className="home__actions">
             <button
               className="home__btn home__btn--primary"
-              onClick={() => handleScroll("#services")}
+              onClick={() => handleNavigate("/services")}
             >
               Наши услуги
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -69,7 +70,7 @@ export default function Home() {
             </button>
             <button
               className="home__btn home__btn--secondary"
-              onClick={() => handleScroll("#contacts")}
+              onClick={() => handleNavigate("/contacts")}
             >
               Связаться
             </button>
@@ -144,7 +145,7 @@ export default function Home() {
       </div>
 
       {/* SCROLL HINT */}
-      <div className="home__scroll-hint" onClick={() => handleScroll("#about")}>
+      <div className="home__scroll-hint" onClick={() => handleNavigate("/about")}>
         <div className="home__scroll-mouse">
           <div className="home__scroll-wheel" />
         </div>
