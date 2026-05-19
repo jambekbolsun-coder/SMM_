@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const navLinks = [
-  { label: "Главная", to: "/" },
-  { label: "О нас", to: "/about" },
-  { label: "Услуги", to: "/services" },
-  { label: "Отзывы", to: "/reviews" },
-  { label: "Контакты", to: "/contacts" },
+  { key: "header_home", to: "/" },
+  { key: "header_services", to: "/services" },
+  { key: "header_about", to: "/about" },
+  { key: "header_reviews", to: "/reviews" },
+  { key: "header_team", to: "/team" },
+  { key: "header_contacts", to: "/contacts" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t, language, setLanguage } = useLanguage();
 
-  // LOGIN MODAL
-  const [showLogin, setShowLogin] = useState(false);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +37,7 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? "header--scrolled" : ""}`}>
         <div className="header__inner">
+
           {/* LOGO */}
           <Link
             className="header__logo"
@@ -62,7 +62,7 @@ export default function Header() {
                 }
                 onClick={() => setMenuOpen(false)}
               >
-                {link.label}
+                {t(link.key)}
                 <span className="nav-underline" />
               </NavLink>
             ))}
@@ -70,24 +70,20 @@ export default function Header() {
 
           {/* RIGHT ACTIONS */}
           <div className="header__actions">
-            <button
-              className="header__cabinet-btn"
-              onClick={() => setShowLogin(true)}
-            >
-              Личный кабинет
-            </button>
+<div className="header__lang-select"> <select value={language} onChange={(e) => setLanguage(e.target.value)} className="header__select" > <option value="kg">🇰🇬 KG</option> <option value="ru">🇷🇺 RU</option> <option value="en">🇺🇸 EN</option> </select> </div>
+
             <button
               className="header__reviews"
               onClick={() => navigate("/modal")}
             >
-              Оставить заявку
+              {t("header_request")}
             </button>
 
             {/* BURGER */}
             <button
               className={`burger ${menuOpen ? "burger--open" : ""}`}
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Меню"
+              aria-label={t("header_menu_aria")}
             >
               <span />
               <span />
@@ -97,11 +93,7 @@ export default function Header() {
         </div>
 
         {/* MOBILE MENU */}
-        <div
-          className={`mobile-menu ${
-            menuOpen ? "mobile-menu--open" : ""
-          }`}
-        >
+        <div className={`mobile-menu ${menuOpen ? "mobile-menu--open" : ""}`}>
           <nav className="mobile-menu__nav">
             {navLinks.map((link) => (
               <NavLink
@@ -113,70 +105,42 @@ export default function Header() {
                 }
                 onClick={() => setMenuOpen(false)}
               >
-                {link.label}
+                {t(link.key)}
               </NavLink>
             ))}
-
+            <NavLink
+              to="/privacy"
+              className={({ isActive }) =>
+                `mobile-menu__link ${isActive ? "active" : ""}`
+              }
+              onClick={() => setMenuOpen(false)}
+            >
+              Политика конфиденциальности
+            </NavLink>
+            <NavLink
+              to="/terms"
+              className={({ isActive }) =>
+                `mobile-menu__link ${isActive ? "active" : ""}`
+              }
+              onClick={() => setMenuOpen(false)}
+            >
+              Условия использования
+            </NavLink>
+          </nav>
+          <div className="mobile-menu__actions">
             <button
-              className="mobile-menu__cabinet"
+              className="mobile-menu__request-btn"
               onClick={() => {
-                setShowLogin(true);
                 setMenuOpen(false);
+                navigate("/modal");
               }}
             >
-              Личный кабинет
+              {t("header_request")}
             </button>
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* LOGIN MODAL */}
-      {showLogin && (
-        <div className="cabinet-modal">
-          <div className="cabinet-modal__box">
-            <h3 className="cabinet-modal__title">
-              Вход в личный кабинет
-            </h3>
-
-            <input
-              type="password"
-              placeholder="Введите пароль"
-              className="cabinet-modal__input"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError(false);
-              }}
-            />
-
-            {error && (
-              <div className="cabinet-modal__error">
-                Неверный пароль
-              </div>
-            )}
-
-            <div className="cabinet-modal__actions">
-              <button
-                className="cabinet-modal__cancel"
-                onClick={() => {
-                  setShowLogin(false);
-                  setPassword("");
-                  setError(false);
-                }}
-              >
-                Отмена
-              </button>
-
-              <button
-                className="cabinet-modal__login"
-                onClick={handleLogin}
-              >
-                Войти
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

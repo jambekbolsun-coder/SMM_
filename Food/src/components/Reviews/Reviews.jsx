@@ -1,13 +1,15 @@
 import { useState } from "react";
 import "./Reviews.css";
 
-const reviews = [
+const defaultReviews = [
   {
     id: 1,
     name: "Айгерим Б.",
     company: "Кофейня «Арома»",
     avatar: "А",
     rating: 5,
+    likes: 12,
+    date: "19.05.2026",
     text: "SMM_KADR полностью изменили наш Instagram. За 2 месяца охват вырос в 4 раза, появились реальные клиенты. Команда всегда на связи и делает всё вовремя.",
     tag: "Пакет Standard",
   },
@@ -17,44 +19,10 @@ const reviews = [
     company: "AutoShop Bishkek",
     avatar: "Н",
     rating: 5,
+    likes: 9,
+    date: "18.05.2026",
     text: "Взяли расширенный пакет — результат превзошёл ожидания. Видео делают профессионально, таргет работает отлично. Продажи выросли на 60% за первый месяц.",
     tag: "Пакет Advanced",
-  },
-  {
-    id: 3,
-    name: "Жылдыз А.",
-    company: "Beauty Studio",
-    avatar: "Ж",
-    rating: 5,
-    text: "Обратилась за разовой съёмкой — теперь на постоянном обслуживании. Ребята реально понимают свою работу, контент живой и привлекательный.",
-    tag: "Разовый → Месячный",
-  },
-  {
-    id: 4,
-    name: "Тимур М.",
-    company: "FitLife Gym",
-    avatar: "Т",
-    rating: 5,
-    text: "Профессиональная команда с чёткими KPI. Каждый месяц получаем отчёты, видим реальный рост. Рекомендую всем, кто хочет серьёзный SMM.",
-    tag: "Пакет Advanced",
-  },
-  {
-    id: 5,
-    name: "Сабина Р.",
-    company: "Kids Boutique",
-    avatar: "С",
-    rating: 5,
-    text: "Очень довольна сотрудничеством! Сторис, Reels, посты — всё на высшем уровне. За месяц подписчики выросли с 800 до 4200. Спасибо команде!",
-    tag: "Пакет Standard",
-  },
-  {
-    id: 6,
-    name: "Бакыт О.",
-    company: "Restaurant «Ош»",
-    avatar: "Б",
-    rating: 5,
-    text: "Взяли базовый пакет для теста — результат понравился. Сейчас на месячном пакете. Видео-контент выглядит очень достойно, клиенты часто говорят что нашли нас в Instagram.",
-    tag: "Basic → Standard",
   },
 ];
 
@@ -75,6 +43,125 @@ function Stars({ count }) {
 
 export default function Reviews() {
   const [active, setActive] = useState(0);
+  const [expanded, setExpanded] = useState({});
+
+  const [reviews, setReviews] = useState(() => {
+    const saved = localStorage.getItem("reviews");
+    return saved ? JSON.parse(saved) : defaultReviews;
+  });
+
+  const [liked, setLiked] = useState(() => {
+    return JSON.parse(localStorage.getItem("liked")) || {};
+  });
+
+  const [toDelete, setToDelete] = useState(null);
+  const [deletedBackup, setDeletedBackup] = useState(null);
+  const [showUndo, setShowUndo] = useState(false);
+
+  const [newReview, setNewReview] = useState({
+    name: "",
+    company: "",
+    text: "",
+    rating: 5,
+  });
+
+  function saveReviews(updated) {
+    setReviews(updated);
+    localStorage.setItem("reviews", JSON.stringify(updated));
+  }
+
+  // ⭐ LIKE (1 раз на человека)
+  function likeReview(id) {
+    const updated = { ...liked };
+
+    const reviewsUpdated = reviews.map((r) => {
+      if (r.id === id) {
+        if (updated[id]) {
+          delete updated[id];
+          return { ...r, likes: r.likes - 1 };
+        } else {
+          updated[id] = true;
+          return { ...r, likes: r.likes + 1 };
+        }
+      }
+      return r;
+    });
+
+    setLiked(updated);
+    localStorage.setItem("liked", JSON.stringify(updated));
+    saveReviews(reviewsUpdated);
+  }
+
+  function addReview(e) {
+    e.preventDefault();
+
+    if (!newReview.name || !newReview.company || !newReview.text) return;
+
+    const review = {
+      id: Date.now(),
+      name: newReview.name,
+      company: newReview.company,
+      avatar: newReview.name.charAt(0),
+      rating: newReview.rating,
+      likes: 0,
+      date: new Date().toLocaleDateString("ru-RU"),
+      text: newReview.text,
+      tag: "Новый отзыв",
+    };
+
+    const updated = [review, ...reviews];
+    saveReviews(updated);
+
+    setNewReview({
+      name: "",
+      company: "",
+      text: "",
+      rating: 5,
+    });
+
+    setActive(0);
+  }
+
+  // 🗑 DELETE FLOW
+  function confirmDelete(id) {
+    setToDelete(id);
+    setDeletedBackup(reviews.find((r) => r.id === id));
+  }
+
+  function deleteReview() {
+    if (toDelete === null) return;
+
+    const deletedIndex = reviews.findIndex((r) => r.id === toDelete);
+    const updated = reviews.filter((r) => r.id !== toDelete);
+
+    const nextActive = updated.length === 0
+      ? 0
+      : deletedIndex < active
+      ? active - 1
+      : active >= updated.length
+      ? updated.length - 1
+      : active;
+
+    saveReviews(updated);
+    setActive(nextActive);
+    setToDelete(null);
+    setShowUndo(true);
+
+    setTimeout(() => {
+      setShowUndo(false);
+      setDeletedBackup(null);
+    }, 5000);
+  }
+
+  function undoDelete() {
+    if (!deletedBackup) return;
+
+    const updated = [deletedBackup, ...reviews];
+    saveReviews(updated);
+
+    setShowUndo(false);
+    setDeletedBackup(null);
+  }
 
   const prev = () =>
     setActive((p) => (p === 0 ? reviews.length - 1 : p - 1));
@@ -82,93 +169,110 @@ export default function Reviews() {
   const next = () =>
     setActive((p) => (p === reviews.length - 1 ? 0 : p + 1));
 
-  const r = reviews[active];
+  const r = reviews[active] || reviews[0] || null;
 
   return (
     <section className="reviews" id="reviews">
       <div className="reviews__container">
+
         <div className="section-label">Отзывы</div>
 
         <div className="reviews__header">
           <h2 className="reviews__title">
             Что говорят наши <span className="blue">клиенты</span>
           </h2>
-          <p className="reviews__sub">Реальные результаты. Реальные отзывы.</p>
+          <p className="reviews__sub">
+            Реальные результаты. Реальные отзывы.
+          </p>
         </div>
 
-        {/* STATS ROW */}
-        <div className="reviews__stats">
-          <div className="reviews__stat">
-            <span className="reviews__stat-num">120+</span>
-            <span className="reviews__stat-label">Выполненных проектов</span>
-          </div>
-
-          <div className="reviews__stat-divider" />
-
-          <div className="reviews__stat">
-            <span className="reviews__stat-num">98%</span>
-            <span className="reviews__stat-label">Уровень удовлетворённости</span>
-          </div>
-
-          <div className="reviews__stat-divider" />
-
-          <div className="reviews__stat">
-            <span className="reviews__stat-num">5.0</span>
-            <span className="reviews__stat-label">Средний рейтинг</span>
-          </div>
-        </div>
-
-        {/* MAIN REVIEW CARD */}
+        {/* MAIN */}
         <div className="reviews__spotlight">
           <div className="reviews__card-main">
-            <div className="reviews__card-top">
-              <div className="reviews__avatar">{r.avatar}</div>
+            {!r ? (
+              <div className="reviews__empty">Нет отзывов.</div>
+            ) : (
+              <>
+                <div className="reviews__card-top">
+                  <div className="reviews__avatar">{r.avatar}</div>
 
-              <div>
-                <div className="reviews__name">{r.name}</div>
-                <div className="reviews__company">{r.company}</div>
-              </div>
+                  <div>
+                    <div className="reviews__name">{r.name}</div>
+                    <div className="reviews__company">{r.company}</div>
 
-              <div className="reviews__tag">{r.tag}</div>
-            </div>
+                    <div className="reviews__date">
+                      Отзыв опубликован: {r.date}
+                    </div>
+                  </div>
 
-            <Stars count={r.rating} />
+                  <div className="reviews__tag">{r.tag}</div>
+                </div>
 
-            <p className="reviews__text">"{r.text}"</p>
-          </div>
+                <Stars count={r.rating} />
 
-          {/* CONTROLS */}
-          <div className="reviews__controls">
-            <button className="reviews__arrow" onClick={prev}>
-              ←
-            </button>
+                <p className="reviews__text">
+                  {expanded[r.id]
+                    ? r.text
+                    : `${r.text.slice(0, 180)}...`}
+                </p>
 
-            <div className="reviews__dots">
-              {reviews.map((_, i) => (
-                <button
-                  key={i}
-                  className={`reviews__dot ${
-                    i === active ? "active" : ""
-                  }`}
-                  onClick={() => setActive(i)}
-                />
-              ))}
-            </div>
+                {r.text.length > 180 && (
+                  <button
+                    className="reviews__more"
+                    onClick={() =>
+                      setExpanded((prev) => ({
+                        ...prev,
+                        [r.id]: !prev[r.id],
+                      }))
+                    }
+                  >
+                    {expanded[r.id] ? "Скрыть" : "Подробнее"}
+                  </button>
+                )}
 
-            <button className="reviews__arrow" onClick={next}>
-              →
-            </button>
+                <div className="reviews__actions">
+                  <button
+                    className="reviews__like"
+                    onClick={() => likeReview(r.id)}
+                  >
+                    ❤️ {r.likes}
+                  </button>
+
+                  <button
+                    className="reviews__delete"
+                    onClick={() => confirmDelete(r.id)}
+                  >
+                    🗑 Удалить
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* MINI GRID */}
+        {/* CONTROLS */}
+        <div className="reviews__controls">
+          <button className="reviews__arrow" onClick={prev}>←</button>
+
+          <div className="reviews__dots">
+            {reviews.map((_, i) => (
+              <button
+                key={i}
+                className={`reviews__dot ${i === active ? "active" : ""}`}
+                onClick={() => setActive(i)}
+              />
+            ))}
+          </div>
+
+          <button className="reviews__arrow" onClick={next}>→</button>
+        </div>
+
+        {/* MINI */}
         <div className="reviews__grid">
           {reviews.map((rev, i) => (
             <div
               key={rev.id}
-              className={`reviews__mini ${
-                i === active ? "reviews__mini--active" : ""
-              }`}
+              className={`reviews__mini ${i === active ? "reviews__mini--active" : ""}`}
               onClick={() => setActive(i)}
             >
               <div className="reviews__mini-top">
@@ -181,11 +285,86 @@ export default function Reviews() {
               </div>
 
               <p className="reviews__mini-text">
-                {rev.text.slice(0, 80)}…
+                {rev.text.slice(0, 80)}...
               </p>
+
+              <div className="reviews__mini-bottom">
+                <span>❤️ {rev.likes}</span>
+                <span>{rev.date}</span>
+              </div>
             </div>
           ))}
         </div>
+
+        {/* FORM (оставил твой как есть) */}
+        <div className="reviews__form-wrap">
+          <h3 className="reviews__form-title">Оставить отзыв</h3>
+
+          <form className="reviews__form" onSubmit={addReview}>
+            <input
+              type="text"
+              placeholder="Ваше имя"
+              className="reviews__input"
+              value={newReview.name}
+              onChange={(e) =>
+                setNewReview({ ...newReview, name: e.target.value })
+              }
+            />
+
+            <input
+              type="text"
+              placeholder="Компания"
+              className="reviews__input"
+              value={newReview.company}
+              onChange={(e) =>
+                setNewReview({ ...newReview, company: e.target.value })
+              }
+            />
+
+            <textarea
+              placeholder="Ваш отзыв"
+              className="reviews__textarea"
+              rows={5}
+              value={newReview.text}
+              onChange={(e) =>
+                setNewReview({ ...newReview, text: e.target.value })
+              }
+            />
+
+            <button type="submit" className="reviews__submit">
+              Отправить отзыв →
+            </button>
+          </form>
+        </div>
+
+        {/* MODAL DELETE */}
+        {toDelete && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h3>Удалить отзыв?</h3>
+              <p>Действие можно отменить через undo</p>
+
+              <div className="modal-actions">
+                <button onClick={() => setToDelete(null)}>
+                  Отмена
+                </button>
+
+                <button onClick={deleteReview}>
+                  Удалить
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* UNDO */}
+        {showUndo && (
+          <div className="undo-bar">
+            <span>Отзыв удалён</span>
+            <button onClick={undoDelete}>Восстановить</button>
+          </div>
+        )}
+
       </div>
     </section>
   );

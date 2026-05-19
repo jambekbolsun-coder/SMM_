@@ -1,11 +1,11 @@
-import Reviews from "../../components/Reviews/Reviews";
-import LeaveReview from "../../components/LeaveReview/LeaveReview";
+﻿import Reviews from "../../components/Reviews/Reviews.jsx";
 
 export default function ReviewsPage() {
   return (
-    <>
-      <Reviews />
-      <LeaveReview />
-    </>
+    <section className="reviews-page">
+      <div className="container">
+        <Reviews />
+      </div>
+    </section>
   );
 }

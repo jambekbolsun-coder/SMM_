@@ -30,9 +30,9 @@ export default function Contacts() {
             <div className="contacts__info-cards">
               {[
                 { icon: "📍", label: "Локация", value: "Бишкек, Кыргызстан" },
-                { icon: "📞", label: "Телефон", value: "+996 700 000 000" },
+                { icon: "📞", label: "Телефон", value: "+996 503 030 018" },
                 { icon: "✉️", label: "Email", value: "info@smmkadr.kg" },
-                { icon: "🕐", label: "Рабочие часы", value: "Пн–Пт: 9:00–18:00" },
+                { icon: "🕐", label: "Рабочие часы", value: "Пн–Сб: 9:00–18:00" },
               ].map((item) => (
                 <div className="contacts__info-card" key={item.label}>
                   <div className="contacts__info-icon">{item.icon}</div>

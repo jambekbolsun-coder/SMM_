@@ -716,6 +716,74 @@
   box-sizing: border-box;
 }
 
+/* SELECT FIX */
+
+.am-input select,
+select.am-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+
+  background: rgba(15, 23, 42, 0.95);
+  color: #ffffff;
+
+  border: 1px solid rgba(255,255,255,.12);
+
+  padding: 14px 18px;
+
+  border-radius: 16px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  outline: none;
+
+  transition:
+    border-color .3s ease,
+    box-shadow .3s ease,
+    background .3s ease;
+}
+
+/* focus */
+
+.am-input select:focus,
+select.am-input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* options */
+
+select.am-input option {
+  background: #0f172a;
+  color: white;
+
+  padding: 12px;
+}
+
+/* hover */
+
+select.am-input:hover {
+  border-color: rgba(255,255,255,.22);
+}
+
+/* custom arrow */
+
+select.am-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.5L10 12l4.5-4.5'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+
+  background-position: right 16px center;
+
+  background-size: 16px;
+
+  padding-right: 48px;
+}
 /* MOBILE */
 @media (max-width: 768px) {
   .modal-page {

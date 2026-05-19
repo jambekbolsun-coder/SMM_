@@ -73,31 +73,49 @@ const onetime = [
   },
 ];
 
-function PriceCard({ card }) {
+function PriceCard({ card, navigate }) {
   return (
     <div className={`price-card ${card.highlight ? "price-card--highlight" : ""}`}>
+      
       {card.badge && (
-        <div className="price-card__badge">{card.badge}</div>
+        <div className="price-card__badge">
+          {card.badge}
+        </div>
       )}
 
       <div className="price-card__top">
-        <span className="price-card__name">{card.name}</span>
+        <span className="price-card__name">
+          {card.name}
+        </span>
 
         {card.videos && (
-          <span className="price-card__videos">📹 {card.videos}</span>
+          <span className="price-card__videos">
+            📹 {card.videos}
+          </span>
         )}
       </div>
 
       <div className="price-card__price">
-        <span className="price-card__amount">{card.price}</span>
-        <span className="price-card__currency"> сом</span>
-        <span className="price-card__period">{card.period}</span>
+        <span className="price-card__amount">
+          {card.price}
+        </span>
+
+        <span className="price-card__currency">
+          {" "}сом
+        </span>
+
+        <span className="price-card__period">
+          {card.period}
+        </span>
       </div>
 
       <ul className="price-card__features">
         {card.features.map((f, i) => (
           <li key={i} className="price-card__feature">
-            <span className="price-card__feature-check">✓</span>
+
+            <span className="price-card__feature-check">
+              ✓
+            </span>
 
             <span className="price-card__feature-label">
               {f.label}
@@ -107,6 +125,7 @@ function PriceCard({ card }) {
             <span className="price-card__feature-price">
               {f.price} с
             </span>
+
           </li>
         ))}
       </ul>
@@ -117,6 +136,7 @@ function PriceCard({ card }) {
       >
         Начать →
       </button>
+
     </div>
   );
 }
@@ -162,11 +182,15 @@ export default function Services() {
         </div>
 
         {/* CARDS */}
-        <div className="services__grid">
-          {(tab === "monthly" ? monthly : onetime).map((card) => (
-            <PriceCard key={card.id} card={card} />
-          ))}
-        </div>
+<div className="services__grid">
+  {(tab === "monthly" ? monthly : onetime).map((card) => (
+    <PriceCard
+      key={card.id}
+      card={card}
+      navigate={navigate}
+    />
+  ))}
+</div>
 
         {/* BOTTOM NOTE */}
         <div className="services__note">

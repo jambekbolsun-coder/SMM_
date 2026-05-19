@@ -1,19 +1,22 @@
 ﻿import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Home from "./pages/Home/Home";
-import About from "./pages/About/About";
-import ServicesPage from "./pages/Services/ServicesPage";
-import ReviewsPage from "./pages/Reviews/ReviewsPage";
-import ContactsPage from "./pages/Contacts/ContactsPage";
-import Cabinet from "./pages/Cabinet/Cabinet";
-import ModalPage from "./pages/modal/ModalPage";
-import NotFound from "./pages/NotFound/NotFound";
-import ChatBot from "./pages/Chat/ChatBot";
-import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header.jsx";
+import Home from "./pages/Home/Home.jsx";
+import About from "./pages/About/About.jsx";
+import ServicesPage from "./components/Services/Services.jsx";
+import TeamPage from "./pages/Team/Team.jsx";
+import ReviewsPage from "./pages/Reviews/ReviewsPage.jsx";
+import ContactsPage from "./pages/Contacts/ContactsPage.jsx";
+import Cabinet from "./pages/Cabinet/Cabinet.jsx";
+import ModalPage from "./pages/modal/ModalPage.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
+import Privacy from "./pages/Privacy/Privacy.jsx";
+import Terms from "./pages/Terms/Terms.jsx";
+import ChatBot from "./pages/Chat/ChatBot.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [authMode, setAuthMode] = useState("login");
 
   if (!isLoggedIn) {
@@ -28,9 +31,12 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/team" element={<TeamPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/modal" element={<ModalPage />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/cabinet" element={<Cabinet />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -41,92 +47,3 @@ export default function App() {
   );
 }
 
-function AuthScreen({ authMode, setAuthMode, onSuccess }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = () => {
-    setError("");
-
-    if (!email.trim()) {
-      setError("Введите email.");
-      return;
-    }
-    if (!password) {
-      setError("Введите пароль.");
-      return;
-    }
-
-    if (authMode === "register") {
-      if (!name.trim()) {
-        setError("Введите имя.");
-        return;
-      }
-      if (password !== confirmPassword) {
-        setError("Пароли не совпадают.");
-        return;
-      }
-    }
-
-    onSuccess();
-  };
-
-  return (
-    <div className="auth-overlay">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <span className="logo-smm">SMM</span>
-          <span className="logo-kadr">_KADR</span>
-        </div>
-        <p className="auth-sub">
-          {authMode === "login" ? "Sign in to continue" : "Create your account"}
-        </p>
-        <div className="auth-tabs">
-          <button className={`auth-tab ${authMode === "login" ? "active" : ""}`} onClick={() => setAuthMode("login")}>Login</button>
-          <button className={`auth-tab ${authMode === "register" ? "active" : ""}`} onClick={() => setAuthMode("register")}>Register</button>
-        </div>
-        <div className="auth-form">
-          {authMode === "register" && (
-            <input
-              className="auth-input"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-            />
-          )}
-          <input
-            className="auth-input"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-          <input
-            className="auth-input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          {authMode === "register" && (
-            <input
-              className="auth-input"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm password"
-            />
-          )}
-          {error && <p className="auth-error">{error}</p>}
-          <button type="button" className="auth-btn" onClick={handleSubmit}>
-            {authMode === "login" ? "Sign In" : "Create Account"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}

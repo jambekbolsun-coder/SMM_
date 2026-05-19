@@ -25,9 +25,32 @@ export default function ModalPage() {
   }
 
   function submit(e) {
-    e.preventDefault();
-    setSubmitted(true);
-  }
+  e.preventDefault();
+
+  const text = `
+🔥 Новая заявка SMM_KADR
+
+👤 Имя: ${form.name}
+
+📞 Телефон: ${form.phone}
+
+🏢 Бизнес: ${form.business}
+
+📦 Пакет: ${form.package || "Не выбран"}
+
+📝 Описание проекта:
+${form.message || "Не указано"}
+  `;
+
+  const whatsappUrl =
+    `https://wa.me/996503030018?text=${encodeURIComponent(text)}`;
+
+  // открываем WhatsApp
+  window.open(whatsappUrl, "_blank");
+
+  // success screen
+  setSubmitted(true);
+}
 
   if (submitted) {
     return (
@@ -134,9 +157,10 @@ export default function ModalPage() {
                     onChange={(e) => update("package", e.target.value)}
                   >
                     <option value="">Выберите пакет</option>
-                    <option value="basic">Basic</option>
-                    <option value="standard">Standard</option>
-                    <option value="advanced">Advanced</option>
+                    <option value="basic">Базовый</option>
+                    <option value="standard">Стандарт</option>
+                    <option value="advanced">Продвинутый</option>
+                    <option value="extended">Расширенный</option>
                   </select>
                 </div>
               </div>

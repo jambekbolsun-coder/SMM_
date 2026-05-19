@@ -1,14 +1,21 @@
 import { useEffect, useRef } from "react";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 export default function Home() {
+  const { t } = useLanguage();
   const counters = useRef([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const targets = [70, 98, 1, 20];
-    const labels = ["Проектов", "% довольных\nклиентов", "Года опыта", "Специалистов"];
+    const labels = [
+      t("home_stat_projects"),
+      t("home_stat_clients"),
+      t("home_stat_experience"),
+      t("home_stat_team"),
+    ];
 
     counters.current.forEach((el, i) => {
       if (!el) return;
@@ -43,19 +50,18 @@ export default function Home() {
         <div className="home__content">
           <div className="home__badge">
             <span className="home__badge-dot" />
-            SMM агентство в Бишкеке
+            {t("home_badge")}
           </div>
 
           <h1 className="home__title">
-            Растите в{" "}
-            <span className="home__title-highlight">соцсетях</span>
+            {t("home_title_part1")} {" "}
+            <span className="home__title-highlight">{t("home_title_highlight")}</span>
             <br />
-            вместе с нами
+            {t("home_title_part2")}
           </h1>
 
           <p className="home__subtitle">
-            SMM_KADR — команда маркетологов, видеографов и таргетологов.
-            Создаём контент, который продаёт, и стратегии, которые работают.
+            {t("home_subtitle")}
           </p>
 
           <div className="home__actions">
@@ -63,7 +69,7 @@ export default function Home() {
               className="home__btn home__btn--primary"
               onClick={() => handleNavigate("/services")}
             >
-              Наши услуги
+              {t("home_btn_services")}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
@@ -72,13 +78,13 @@ export default function Home() {
               className="home__btn home__btn--secondary"
               onClick={() => handleNavigate("/contacts")}
             >
-              Связаться
+              {t("home_btn_contact")}
             </button>
           </div>
 
           {/* STATS */}
           <div className="home__stats">
-            {["Проектов", "Клиентов", "Лет опыта", "Специалистов"].map((label, i) => (
+            {[t("home_stat_projects"), t("home_stat_clients"), t("home_stat_experience"), t("home_stat_team")].map((label, i) => (
               <div className="home__stat" key={label}>
                 <span
                   className="home__stat-num"
@@ -133,13 +139,13 @@ export default function Home() {
 
           {/* FLOATING BADGES */}
           <div className="home__float home__float--1">
-            🎯 Таргетинг
+            {t("home_float_targeting")}
           </div>
           <div className="home__float home__float--2">
-            🎬 Видеоконтент
+            {t("home_float_video")}
           </div>
           <div className="home__float home__float--3">
-            📊 Аналитика
+            {t("home_float_analytics")}
           </div>
         </div>
       </div>
@@ -149,7 +155,7 @@ export default function Home() {
         <div className="home__scroll-mouse">
           <div className="home__scroll-wheel" />
         </div>
-        <span>Прокрутить вниз</span>
+        <span>{t("home_scroll_hint")}</span>
       </div>
     </section>
   );
