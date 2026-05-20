@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ChatBot.css";
 import { useLanguage } from "../../context/LanguageContext.jsx";
 import { chatData } from "./chatbotData.js";
@@ -12,6 +13,7 @@ import {
 } from "./chatbotHelpers.js";
 
 export default function ChatBot() {
+  const navigate = useNavigate();
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -58,7 +60,7 @@ export default function ChatBot() {
     }
 
     if (action.action === "route" && action.route) {
-      window.location.href = action.route;
+      navigate(action.route);
       return;
     }
   };

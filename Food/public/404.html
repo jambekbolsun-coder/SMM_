@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Page not found</title>
+    <meta name="robots" content="noindex" />
+    <script>
+      (function () {
+        var repoBase = '/SMM_';
+        var currentPath = window.location.pathname + window.location.search + window.location.hash;
+        if (currentPath.indexOf(repoBase) === 0) {
+          currentPath = currentPath.slice(repoBase.length) || '/';
+        }
+        window.location.replace(repoBase + '/?redirect=' + encodeURIComponent(currentPath));
+      })();
+    </script>
+  </head>
+  <body>
+    <h1>Страница не найдена</h1>
+    <p>Перенаправление на сайт...</p>
+  </body>
+</html>
