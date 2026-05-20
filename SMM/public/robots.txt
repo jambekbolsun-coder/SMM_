@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://jambekbolsun-coder.github.io/SMM_/sitemap.xml
+Host: jambekbolsun-coder.github.io
