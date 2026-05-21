@@ -7,13 +7,16 @@ import ServicesPage from "./components/Services/Services.jsx";
 import TeamPage from "./pages/Team/Team.jsx";
 import ReviewsPage from "./pages/Reviews/ReviewsPage.jsx";
 import ContactsPage from "./pages/Contacts/ContactsPage.jsx";
-import Cabinet from "./pages/Cabinet/Cabinet.jsx";
 import ModalPage from "./pages/modal/ModalPage.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import Privacy from "./pages/Privacy/Privacy.jsx";
 import Terms from "./pages/Terms/Terms.jsx";
 import ChatBot from "./pages/Chat/ChatBot.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import FinancialJournal from "./pages/FinancialJournal/FinancialJournal.jsx";
+import TeamFinance from "./pages/TeamFinance/TeamFinance.jsx";
+
+
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -37,7 +40,8 @@ export default function App() {
           <Route path="/modal" element={<ModalPage />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/cabinet" element={<Cabinet />} />
+          <Route path="/financial-journal" element={<FinancialJournal />} />
+          <Route path="/team-finance" element={<TeamFinance />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

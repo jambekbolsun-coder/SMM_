@@ -152,9 +152,7 @@ export default function Home() {
 
       {/* SCROLL HINT */}
       <div className="home__scroll-hint" onClick={() => handleNavigate("/about")}>
-        <div className="home__scroll-mouse">
-          <div className="home__scroll-wheel" />
-        </div>
+
         <span>{t("home_scroll_hint")}</span>
       </div>
     </section>

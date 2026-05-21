@@ -1,0 +1,693 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #070b11;
+  --card: rgba(17, 24, 39, 0.88);
+  --stroke: rgba(255,255,255,0.06);
+
+  --text: #f4f7fb;
+  --muted: #8b95a7;
+
+  --cyan: #00d4ff;
+  --cyan2: #7ae9ff;
+
+  --green: #38ff9c;
+  --red: #ff5d73;
+  --yellow: #ffc857;
+
+  --radius: 24px;
+
+  --shadow:
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* ───────────────────────── */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+/* ───────────────────────── */
+
+.tf-root {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at top left, rgba(0,212,255,0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(56,255,156,0.05), transparent 30%),
+    linear-gradient(180deg, #05070d 0%, #0c121b 100%);
+
+  padding: 34px;
+}
+
+/* ───────────────────────── */
+/* HEADER */
+/* ───────────────────────── */
+
+.tf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  margin-bottom: 28px;
+}
+
+.tf-header h1 {
+  margin: 0;
+
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+
+  background: linear-gradient(
+    90deg,
+    #00d4ff,
+    #ffffff,
+    #00d4ff
+  );
+
+  background-size: 200%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% }
+  100% { background-position: 200% }
+}
+
+.tf-header p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* ───────────────────────── */
+/* HISTORY BTN */
+/* ───────────────────────── */
+
+.tf-history-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.04);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  border-radius: 16px;
+
+  padding: 12px 18px;
+
+  color: var(--text);
+
+  font-size: 0.84rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.22s ease;
+}
+
+.tf-history-btn:hover {
+  border-color: rgba(0,212,255,0.3);
+
+  color: var(--cyan);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 30px rgba(0,212,255,0.12);
+}
+
+.tf-history-btn span {
+  background: var(--cyan);
+  color: #071018;
+
+  border-radius: 999px;
+
+  padding: 2px 8px;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ───────────────────────── */
+/* STATS */
+/* ───────────────────────── */
+
+.tf-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 26px;
+}
+
+.tf-stat {
+  background: var(--card);
+
+  border: 1px solid var(--stroke);
+
+  border-radius: var(--radius);
+
+  padding: 24px;
+
+  backdrop-filter: blur(14px);
+
+  box-shadow: var(--shadow);
+}
+
+.tf-stat label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: var(--muted);
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tf-stat strong {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+}
+
+.tf-stat--green strong {
+  color: var(--green);
+}
+
+/* ───────────────────────── */
+/* ADD */
+/* ───────────────────────── */
+
+.tf-add {
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px 170px;
+
+  gap: 14px;
+
+  margin-bottom: 34px;
+}
+
+.tf-add input {
+  height: 52px;
+
+  background: rgba(255,255,255,0.04);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  border-radius: 16px;
+
+  padding: 0 16px;
+
+  color: white;
+
+  outline: none;
+
+  font-size: 0.92rem;
+
+  transition: 0.18s ease;
+}
+
+.tf-add input:focus {
+  border-color: rgba(0,212,255,0.4);
+
+  box-shadow:
+    0 0 0 4px rgba(0,212,255,0.08);
+}
+
+.tf-add button {
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #00d4ff,
+    #6beaff
+  );
+
+  color: #071018;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.22s ease;
+}
+
+.tf-add button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(0,212,255,0.25);
+}
+
+/* ───────────────────────── */
+/* GRID */
+/* ───────────────────────── */
+
+.tf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+
+  gap: 18px;
+}
+
+/* ───────────────────────── */
+/* CARD */
+/* ───────────────────────── */
+
+.tf-card {
+  position: relative;
+
+  background: var(--card);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  border-radius: 28px;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  backdrop-filter: blur(18px);
+
+  box-shadow: var(--shadow);
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.tf-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.04),
+      transparent 40%
+    );
+
+  pointer-events: none;
+}
+
+.tf-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(0,212,255,0.2);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.45),
+    0 0 35px rgba(0,212,255,0.08);
+}
+
+/* ───────────────────────── */
+
+.tf-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.tf-card-top h3 {
+  margin: 0;
+
+  font-size: 1.28rem;
+  font-weight: 700;
+}
+
+.tf-card-top p {
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 0.82rem;
+}
+
+/* ───────────────────────── */
+/* DELETE */
+/* ───────────────────────── */
+
+.tf-delete {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: rgba(255,93,115,0.12);
+
+  color: var(--red);
+
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  transition: 0.18s ease;
+}
+
+.tf-delete:hover {
+  background: var(--red);
+  color: white;
+}
+
+/* ───────────────────────── */
+/* MONEY */
+/* ───────────────────────── */
+
+.tf-money {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.tf-money div {
+  background: rgba(255,255,255,0.03);
+
+  border: 1px solid rgba(255,255,255,0.05);
+
+  border-radius: 18px;
+
+  padding: 16px;
+}
+
+.tf-money span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--muted);
+
+  font-size: 0.72rem;
+
+  text-transform: uppercase;
+}
+
+.tf-money strong {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.green {
+  color: var(--green);
+}
+
+/* ───────────────────────── */
+/* NOTE */
+/* ───────────────────────── */
+
+.tf-note {
+  margin-bottom: 18px;
+
+  padding: 14px;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.04);
+
+  color: var(--muted);
+
+  font-size: 0.84rem;
+}
+
+/* ───────────────────────── */
+/* ACTIONS */
+/* ───────────────────────── */
+
+.tf-actions {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+.tf-actions button {
+  height: 48px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.tf-actions button:hover {
+  transform: translateY(-2px);
+}
+
+/* ───────────────────────── */
+
+.tf-actions .pay {
+  background: rgba(56,255,156,0.12);
+  color: var(--green);
+}
+
+.tf-actions .pay:hover {
+  background: var(--green);
+  color: #071018;
+}
+
+.tf-actions .bonus {
+  background: rgba(255,200,87,0.12);
+  color: var(--yellow);
+}
+
+.tf-actions .bonus:hover {
+  background: var(--yellow);
+  color: #071018;
+}
+
+.tf-actions .info {
+  background: rgba(0,212,255,0.12);
+  color: var(--cyan);
+}
+
+.tf-actions .info:hover {
+  background: var(--cyan);
+  color: #071018;
+}
+
+/* ───────────────────────── */
+/* HISTORY MODAL */
+/* ───────────────────────── */
+
+.tf-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.72);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 999;
+
+  backdrop-filter: blur(8px);
+}
+
+.tf-history {
+  width: 100%;
+  max-width: 620px;
+
+  max-height: 80vh;
+
+  overflow-y: auto;
+
+  background: rgba(17,24,39,0.96);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  border-radius: 28px;
+
+  padding: 26px;
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.45);
+}
+
+.tf-history-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.tf-history-top h2 {
+  margin: 0;
+
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+}
+
+.tf-history-top button {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.05);
+
+  color: white;
+
+  cursor: pointer;
+}
+
+.tf-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tf-history-item {
+  background: rgba(255,255,255,0.03);
+
+  border: 1px solid rgba(255,255,255,0.05);
+
+  border-radius: 18px;
+
+  padding: 16px;
+}
+
+.tf-history-item strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 0.92rem;
+}
+
+.tf-history-item span {
+  color: var(--muted);
+
+  font-size: 0.76rem;
+}
+
+/* ───────────────────────── */
+/* EMPTY */
+/* ───────────────────────── */
+
+.tf-empty {
+  text-align: center;
+
+  padding: 60px 20px;
+
+  color: var(--muted);
+}
+
+/* ───────────────────────── */
+/* MOBILE */
+/* ───────────────────────── */
+
+@media (max-width: 900px) {
+
+  .tf-add {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-money {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .tf-root {
+    padding: 18px;
+  }
+
+  .tf-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tf-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .tf-history-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tf-stat strong {
+    font-size: 1.8rem;
+  }
+
+  .tf-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .tf-card-top h3 {
+    font-size: 1.08rem;
+  }
+
+  .tf-money strong {
+    font-size: 1.1rem;
+  }
+
+  .tf-actions button {
+    font-size: 0.74rem;
+  }
+
+  .tf-history {
+    padding: 18px;
+    border-radius: 22px;
+  }
+}

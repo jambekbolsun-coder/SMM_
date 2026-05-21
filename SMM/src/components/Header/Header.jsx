@@ -15,19 +15,36 @@ const navLinks = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
+
   const { t, language, setLanguage } = useLanguage();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
+
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (logoClicks === 3) {
+      setLoginOpen(true);
+      setLogoClicks(0);
+    }
+  }, [logoClicks]);
+
   const handleLogin = () => {
-    if (password === "smmkadr2024") {
-      navigate("/cabinet");
+    if (password === "smmkadr2025") {
+      setError(false);
+      setLoginOpen(false);
+      navigate("/Financial-journal");
     } else {
       setError(true);
     }
@@ -42,7 +59,10 @@ export default function Header() {
           <Link
             className="header__logo"
             to="/"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false);
+              setLogoClicks((prev) => prev + 1);
+            }}
           >
             <div className="header__logo-text">
               <span className="logo-smm">SMM</span>
@@ -70,7 +90,18 @@ export default function Header() {
 
           {/* RIGHT ACTIONS */}
           <div className="header__actions">
-<div className="header__lang-select"> <select value={language} onChange={(e) => setLanguage(e.target.value)} className="header__select" > <option value="kg">🇰🇬 KG</option> <option value="ru">🇷🇺 RU</option> <option value="en">🇺🇸 EN</option> </select> </div>
+
+            <div className="header__lang-select">
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="header__select"
+              >
+                <option value="kg">🇰🇬 KG</option>
+                <option value="ru">🇷🇺 RU</option>
+                <option value="en">🇺🇸 EN</option>
+              </select>
+            </div>
 
             <button
               className="header__reviews"
@@ -108,6 +139,7 @@ export default function Header() {
                 {t(link.key)}
               </NavLink>
             ))}
+
             <NavLink
               to="/privacy"
               className={({ isActive }) =>
@@ -117,6 +149,7 @@ export default function Header() {
             >
               Политика конфиденциальности
             </NavLink>
+
             <NavLink
               to="/terms"
               className={({ isActive }) =>
@@ -127,6 +160,7 @@ export default function Header() {
               Условия использования
             </NavLink>
           </nav>
+
           <div className="mobile-menu__actions">
             <button
               className="mobile-menu__request-btn"
@@ -141,6 +175,54 @@ export default function Header() {
         </div>
       </header>
 
+      {/* SECRET LOGIN MODAL */}
+      <div className={`secret-modal ${loginOpen ? "secret-modal--open" : ""}`}>
+        <div className="secret-modal__card">
+
+          <button
+            className="secret-modal__close"
+            onClick={() => setLoginOpen(false)}
+          >
+            ✕
+          </button>
+
+          <div className="secret-modal__icon">🔒</div>
+
+<h2>Staff Only</h2>
+
+<p>Доступ разрешён только сотрудникам SMM_KADR</p>
+
+          <input
+            type="password"
+            placeholder="Введите код..."
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError(false);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
+            className={error ? "error-input" : ""}
+          />
+
+          {error && (
+            <span className="secret-modal__error">
+              Неверный код доступа
+            </span>
+          )}
+
+          <button
+            className="secret-modal__btn"
+            onClick={handleLogin}
+          >
+            Войти
+          </button>
+
+        </div>
+      </div>
     </>
   );
 }
